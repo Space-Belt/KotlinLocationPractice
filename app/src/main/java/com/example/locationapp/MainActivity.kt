@@ -59,6 +59,11 @@ fun LocationDisplay(
     context: Context
 ) {
     val location = viewModel.location.value
+
+    val address = location?.let{
+        locationUtils.reverseGeocodeLocation(location)
+    }
+
     // 액티비티 시작하라는 요청 등록하는것 --> 자동 관리 요청 코드 및 변환과 관련된 레코드가 레지스트리에 생성됨
     // 팝업의 결과가 나오면 알려달라는거임
     val requestPermissionLauncher = rememberLauncherForActivityResult(
@@ -102,7 +107,7 @@ fun LocationDisplay(
         verticalArrangement = Arrangement.Center
     ) {
         if (location != null) {
-            Text("위도경도: ${location.latitude} ${location.longitude}")
+            Text("위도경도: ${location.latitude} ${location.longitude} \n $address")
         }
         Text(text = "위치 제공 불가")
 
